@@ -11,29 +11,59 @@ const connection = Promise.promisifyAll(mysql.createConnection({
   user: 'root',
   password: '',
   database: 'cnam_2016',
-}));
+}), { multiArgs: true });
 
 const app = express();
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+app.get('/api', function (req, res) {
+  connection.queryAsync('SELECT * from dessert')
+    .then(function(results) {
+      const rows = results[0];
+      const fields = results[1];
 
-app.get('/view', function (req, res) {
-  res.send('Hello World!');
+      let html = `
+        <html>
+          <head></head>
+          <body>
+            <table style="border:1px solid black;border-collapse:collapse">
+      `;
+
+      fields.forEach(function(field) {
+        html += `
+              <th>${field.name}</th>
+        `;
+      });
+
+      rows.forEach(function(row) {
+        html += `
+              <tr>
+        `;
+
+        Object.keys(row).forEach(function(key) {
+          html += `
+                <td style="border:1px solid black">${row[key]}</td>
+          `;
+        });
+
+        html += `
+              </tr>
+        `;
+      });
+
+      html += `
+          </table>
+        </body>
+      </html>
+      `;
+      res.send(html);
+    })
+  ;
 });
 
 connection.connectAsync()
   .then(function() {
     app.listen(3000, function() {
       console.log('Example app listening on port 3000!');
-      connection.queryAsync('SELECT * from dessert')
-        .then(function(results) {
-          console.log('The solution is: ', results);
-
-          connection.end();
-        })
-      ;
     });
   })
 ;
