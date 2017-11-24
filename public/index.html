@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Exemple Webapp</title>
+
+  <script src="//code.angularjs.org/snapshot/angular.min.js"></script>
+  <script src="index.js"></script>
+</head>
+<body ng-app="myApp">
+  <div id="ctrl-exmpl" ng-controller="RecipeController as $ctrl">
+    <table style="border:1px solid black;border-collapse:collapse">
+      <th ng-repeat="field in $ctrl.fields">{{ field.name }}</th>
+      <tr ng-repeat="row in $ctrl.rows">
+        <td ng-repeat="val in row" style="border:1px solid black">{{ val }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="ctrl-exmpl" ng-controller="SettingsController as $ctrl">
+    <label>Name: <input type="text" ng-model="$ctrl.name"/></label>
+    <button ng-click="$ctrl.greet()">greet</button><br/>
+    Contact:
+    <ul>
+      <li ng-repeat="contact in $ctrl.contacts">
+        <select ng-model="contact.type" id="select_{{$index}}">
+           <option>phone</option>
+           <option>email</option>
+        </select>
+        <input type="text" ng-model="contact.value" aria-labelledby="select_{{$index}}" />
+        <button ng-click="$ctrl.clearContact(contact)">clear</button>
+        <button ng-click="$ctrl.removeContact(contact)">X</button>
+      </li>
+      <li>[ <button ng-click="$ctrl.addContact()">add</button> ]</li>
+    </ul>
+  </div>
+</body>
+</html>

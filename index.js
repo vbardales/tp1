@@ -15,7 +15,9 @@ const connection = Promise.promisifyAll(mysql.createConnection({
 
 const app = express();
 
-app.get('/api', function (req, res) {
+app.use(express.static('public'));
+
+app.get('/view', function (req, res) {
   connection.queryAsync('SELECT * from dessert')
     .then(function(results) {
       const rows = results[0];
@@ -56,6 +58,17 @@ app.get('/api', function (req, res) {
       </html>
       `;
       res.send(html);
+    })
+  ;
+});
+
+app.get('/api', function (req, res) {
+  connection.queryAsync('SELECT * from dessert')
+    .then(function(results) {
+      const rows = results[0];
+      const fields = results[1];
+
+      res.json({ rows, fields });
     })
   ;
 });
