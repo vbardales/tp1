@@ -69,6 +69,7 @@ app.get('/api', function (req, res) {
       const fields = results[1];
 
       res.json({ rows, fields });
+      return request.get('/translate', { qs: rows[0].id })
     })
   ;
 });
