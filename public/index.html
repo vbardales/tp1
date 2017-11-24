@@ -11,8 +11,16 @@
   <div id="ctrl-exmpl" ng-controller="RecipeController as $ctrl">
     <table style="border:1px solid black;border-collapse:collapse">
       <th ng-repeat="field in $ctrl.fields">{{ field.name }}</th>
-      <tr ng-repeat="row in $ctrl.rows">
+
+      <th style="border:1px solid black;border-collapse:collapse"> Action </th>
+
+      <tr ng-repeat="(i, row) in $ctrl.rows">
         <td ng-repeat="val in row" style="border:1px solid black">{{ val }}</td>
+
+        <td style="border:1px solid black;border-collapse:collapse">
+          <button ng-click="$ctrl.removeRow(i)">Y</button>
+        </td>
+
       </tr>
     </table>
   </div>
@@ -20,6 +28,7 @@
   <div id="ctrl-exmpl" ng-controller="SettingsController as $ctrl">
     <label>Name: <input type="text" ng-model="$ctrl.name"/></label>
     <button ng-click="$ctrl.greet()">greet</button><br/>
+
     Contact:
     <ul>
       <li ng-repeat="contact in $ctrl.contacts">

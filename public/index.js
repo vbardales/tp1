@@ -12,6 +12,11 @@ function RecipeController($http) {
       console.log(res)
     }.bind(this))
   ;
+
+  this.removeRow = function(index) {
+
+    this.rows.splice(index, 1);
+  };
 }
 
 function SettingsController() {

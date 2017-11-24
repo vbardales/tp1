@@ -10,7 +10,7 @@ const connection = Promise.promisifyAll(mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'cnam_2016',
+  database: 'Cours5et6',
 }), { multiArgs: true });
 
 const app = express();
